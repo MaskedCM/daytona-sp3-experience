@@ -31,8 +31,8 @@ Keep creator attribution, the source link, licence link and modification notice 
 - Embedded in `src/audio/freeSoundPack.ts`; the filename does not establish a licence.
 - Startup excerpt: **9.25–11.30 s**.
 - Running sustain source: **11.05–12.15 s**.
-- High-RPM sustain source: **114.92–115.651 s**.
-- Changes: trimming, filtering, phase-aligned overlap preparation, loudness matching around -18 LUFS and encoding. Startup is MP3; repeating sustains use 48 kHz stereo PCM WAV buffers for exact loop boundaries.
+- Natural stationary rev source: **12.20–19.37 s**, repeating as a 7.14-second passage.
+- Rev changes: trimming, a 30 ms repeat-boundary overlap and constant gain (-0.09 dB). Original speed and stereo are retained; there is no pitch shifting, time stretching, equalisation or rapid gain correction on Rev. Startup/running retain their earlier filtering and loudness preparation. Startup is MP3; running and Rev use 48 kHz stereo PCM WAV buffers.
 
 **No Creative Commons or royalty-free licence was verified for these video excerpts. Attribution is not permission.** This repository does not grant reuse rights to the video creator's recording or the underlying game audio. Obtain appropriate permission or replace the engine clips with audio whose licence covers the intended distribution, especially before commercial reuse. Gameplay/source attribution is displayed in the app as well.
 

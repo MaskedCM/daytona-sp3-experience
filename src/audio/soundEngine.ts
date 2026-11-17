@@ -99,7 +99,7 @@ export const ILLUSTRATIVE_SOUND_CREDITS: readonly SoundCreditItem[] = [
     "url": "https://www.youtube.com/watch?v=DbwVURaXI-Y",
     "license": "Reuse licence not verified",
     "licenseUrl": "https://www.youtube.com/watch?v=DbwVURaXI-Y",
-    "changes": "User-selected gameplay reference. Startup: 9.25–11.30 s; running sustain: 11.05–12.15 s; high-RPM sustain: 114.92–115.651 s. Trimmed, filtered, phase-aligned loop overlaps and loudness matched to startup. Sustains use lossless PCM for seamless continuous playback. Game audio, not a real-car microphone recording. Reuse licence not verified; no Creative Commons or royalty-free licence is claimed."
+    "changes": "User-selected gameplay reference. Startup: 9.25–11.30 s; running sustain: 11.05–12.15 s; original stationary revs: 12.20–19.37 s. Rev repeats the recorded rise and fall at original speed and stereo, with constant gain and a 30 ms boundary overlap only; no baked-in pitch shifting, time stretching, EQ or rapid volume correction on the Rev asset. Running and Rev use lossless PCM buffers. Game audio, not a real-car microphone recording. Reuse licence not verified; no Creative Commons or royalty-free licence is claimed."
   },
   {
     "title": "CAR DOOR OPEN CLOSE.wav",
@@ -546,7 +546,7 @@ export class SoundEngine {
   /**
    * From stopped: plays the startup clip once, then crossfades into a continuous
    * native running-engine loop at the same perceived loudness until Stop.
-   * From revving: smoothly crossfades directly from the high-RPM rev loop into
+   * From revving: smoothly crossfades directly from the recorded rev loop into
    * the continuous running-engine loop without re-cranking the starter.
    */
   public startEngine(): boolean {
@@ -660,7 +660,7 @@ export class SoundEngine {
   }
 
   /**
-   * Smoothly crossfades into a continuous native high-RPM rev loop at unity loudness
+   * Smoothly crossfades into a native loop of the original recorded revs at unity gain
    * and holds it indefinitely until Stop (or until switched back to running via Start engine).
    */
   public revEngine(): boolean {

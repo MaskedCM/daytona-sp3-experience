@@ -40,9 +40,11 @@ The lighting environment is a bundled HDRI. Materials use the scene's environmen
 
 ## Audio lifecycle
 
-The Web Audio context and embedded pack are created/loaded only after explicit sound opt-in. Startup is a one-shot source. Running and Rev are native looping buffer sources with prepared PCM sustain assets, rather than repeating JavaScript timers that fade each clip to silence.
+The Web Audio context and embedded pack are created/loaded only after explicit sound opt-in. Startup is a one-shot source. Running and Rev are native looping buffer sources with a prepared PCM running sustain and a longer original recorded rev passage, rather than repeating JavaScript timers that fade each clip to silence.
 
 All engine modes use matched playback gain; the edited source assets were loudness matched around -18 LUFS. Start from Rev crossfades directly into the running loop without replaying the starter. Rev remains active until an explicit switch, Stop, mute or hidden-tab stop.
+
+Rev uses a 7.14-second stationary passage from the original recording, retaining its rises/falls and natural amplitude changes. Only a constant gain and 30 ms repeat-boundary overlap are applied. Pitch shifting, time stretching, EQ and rapid gain correction are absent from that asset. The owner chose repeating natural revs rather than a frozen high note.
 
 The controller owns voices, pending transition timers, fade cleanup timers, filters and the context. Cancellation tokens prevent a pending startup callback from resurrecting playback after Stop. Mute stops playback; unmute remains quiet. Context disposal releases nodes and timers. Cockpit and rear-cover state change the sound's filtering/presence.
 

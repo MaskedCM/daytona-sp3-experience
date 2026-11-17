@@ -19,7 +19,7 @@ An interactive study of the Ferrari Daytona SP3: begin with the assembled car, s
 | **Customise** | Exterior palette and colour picker, caliper colours, leather finishes, hardtop finish, cockpit view and six wheel designs. |
 | **V12 mechanical lab** | Twelve animated pistons and connecting rods, crankshaft, valve motion and the four-stroke cycle; playback and component selection. |
 | **Photo Mode** | Compose with 35/50/85 mm lenses and export clean 4K landscape, square or portrait images without interface controls. |
-| **Sound** | Explicit opt-in, startup once followed by a continuous running loop, steady high-RPM Rev until Stop, smooth transitions, volume, mute, panel foley and cockpit/cover acoustics. |
+| **Sound** | Explicit opt-in, startup once followed by a continuous running loop, original recorded revs repeating until Stop, smooth transitions, volume, mute, panel foley and cockpit/cover acoustics. |
 
 The six wheel options are **Factory SP3, Split-Y, Ten-Spoke, Cross-Mesh, Five-Blade and Aero Disc**. The five alternatives are procedural visual concepts, not an official Ferrari options catalogue.
 
@@ -36,7 +36,7 @@ The six wheel options are **Factory SP3, Split-Y, Ten-Spoke, Cross-Mesh, Five-Bl
 3. Scroll, or choose **Anatomy**, to separate the car. Select a label or find a component in the hierarchy. **Chassis & V12** reveals the deeper illustrative layer.
 4. Choose **Customise** for paint, wheels and finishes. **Step inside the cockpit** changes the camera to the cabin.
 5. Open **V12 / Mechanical Lab** from Anatomy to inspect the animated engine mechanism.
-6. Select **Enable sound** if you want audio. **Start engine** plays startup once, then keeps running. **Rev** holds its high note until **Stop**. Returning to Start from Rev crossfades to the running sound without replaying the starter.
+6. Select **Enable sound** if you want audio. **Start engine** plays startup once, then keeps running. **Rev** repeats the original natural revs until **Stop**. Returning to Start from Rev crossfades to the running sound without replaying the starter.
 7. Use **Photo Mode** to compose and save a clean image.
 
 Sound starts only after an explicit click. Muting or hiding the browser tab stops playback; unmuting does not restart it. Reduced-motion preferences disable automatic rotation and guided camera movement initially. The wheel choice is remembered in browser local storage; there is no account or database.
@@ -68,7 +68,7 @@ npm run preview
 
 Or run `npm run check` for type checking, tests, production build and artifact verification in sequence. `preview` serves the production build locally; it is not the production host.
 
-The regression suite covers 29 behaviours, including geometry framing, reversible explosion, actual GLB group structure, hinged door assemblies, all six wheel designs, engine mechanism constraints, finish targeting, tray restoration, label layout and audio lifecycle. Audio tests advance a controlled clock beyond 60 seconds to verify sustained loops and cancellation. They complement browser checks; they do not measure GPU performance or replace listening on real devices.
+The regression suite covers 30 behaviours, including geometry framing, reversible explosion, actual GLB group structure, hinged door assemblies, all six wheel designs, engine mechanism constraints, finish targeting, tray restoration, label layout and audio lifecycle. Audio tests advance a controlled clock beyond 60 seconds to verify sustained loops and cancellation. They complement browser checks; they do not measure GPU performance or replace listening on real devices.
 
 The production verifier checks the configured path prefix, entry assets, real GLB/HDR headers, attribution files, self-hosted fonts and deployment size. A GitHub Pages build uses the repository subpath, rather than assuming deployment at a domain root.
 

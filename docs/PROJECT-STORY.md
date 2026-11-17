@@ -28,9 +28,9 @@ This is an explanatory mechanism, not a claim to reproduce every detail of Ferra
 
 ## Sound that behaves like a control
 
-The sound design evolved from short effects to an engine that remains active until the visitor stops it. The selected reference is gameplay footage of the SP3. Startup transitions into a loudness-matched running sustain; Rev holds a steadier high-RPM passage instead of replaying rising-and-falling throttle blips.
+The sound design evolved from short effects to an engine that remains active until the visitor stops it. The selected reference is gameplay footage of the SP3. Startup transitions into a loudness-matched running sustain; Rev repeats a longer original stationary passage, preserving the recorded rising-and-falling throttle sound instead of freezing a processed high note.
 
-The repeating sustains use prepared lossless PCM buffers and native Web Audio looping. Explicit opt-in, smooth switching, Stop, mute and hidden-tab cancellation are part of the experience, rather than incidental audio-player behaviour. Source and licence limitations remain documented.
+The running sustain and original recorded rev passage use lossless PCM buffers and native Web Audio looping. Explicit opt-in, smooth switching, Stop, mute and hidden-tab cancellation are part of the experience, rather than incidental audio-player behaviour. Source and licence limitations remain documented.
 
 ## Publishing the finished experience
 

@@ -60,16 +60,16 @@ export function ExperienceControls(p:Props) {
       </div>
     </header>
     {(sound.enabled||sound.loadState==='loading'||sound.loadState==='error')&&<section className="sound-control-bar" aria-label="Illustrative sound controls" data-testid="sound-control-bar" data-load-state={sound.loadState} data-engine-state={sound.engineState} data-acoustics={acousticProfile}>
-      <span className="sound-illustrative-tag" title="Daytona SP3 engine start, continuous running loop and steady high-RPM rev loop (114.92–115.651 s) from DARK WORKS Assetto Corsa EVO gameplay video; generic door foley.">Illustrative audio</span>
+      <span className="sound-illustrative-tag" title="Daytona SP3 engine start, continuous running loop and original recorded revs from DARK WORKS Assetto Corsa EVO gameplay video; generic door foley.">Illustrative audio</span>
       {sound.loadState==='loading'&&<span role="status" className="sound-feedback" data-testid="sound-loading-feedback">Loading audio…</span>}
       {sound.loadState==='error'&&<>
         <span role="alert" className="sound-feedback sound-feedback-error" data-testid="sound-error-feedback">{sound.errorMessage||'Audio failed to load'}</span>
         <button onClick={p.onSoundEnable} data-testid="retry-sound-btn">Retry sound</button>
       </>}
       {sound.loadState==='ready'&&<>
-        <button onClick={p.onSoundStart} disabled={sound.muted||sound.engineState==='starting'||sound.engineState==='idling'} aria-pressed={sound.engineState==='starting'||sound.engineState==='idling'} title={sound.engineState==='revving'?'Return from high-RPM rev to continuous running loop (holds until Stop)':'Startup once, then continuous running loop until Stop'} data-testid="sound-start-btn">Start engine</button>
-        <button onClick={p.onSoundRev} disabled={sound.muted} aria-pressed={sound.engineState==='revving'} title="Hold steady high-RPM loop until Stop" data-testid="sound-rev-btn">Rev</button>
-        <button onClick={p.onSoundStop} disabled={sound.engineState==='stopped'} title="Stop continuous running or high-RPM rev loop" data-testid="sound-stop-btn">Stop</button>
+        <button onClick={p.onSoundStart} disabled={sound.muted||sound.engineState==='starting'||sound.engineState==='idling'} aria-pressed={sound.engineState==='starting'||sound.engineState==='idling'} title={sound.engineState==='revving'?'Return from recorded revs to continuous running loop (holds until Stop)':'Startup once, then continuous running loop until Stop'} data-testid="sound-start-btn">Start engine</button>
+        <button onClick={p.onSoundRev} disabled={sound.muted} aria-pressed={sound.engineState==='revving'} title="Repeat original recorded revs until Stop" data-testid="sound-rev-btn">Rev</button>
+        <button onClick={p.onSoundStop} disabled={sound.engineState==='stopped'} title="Stop continuous running or recorded revs" data-testid="sound-stop-btn">Stop</button>
         <span className="dock-divider"/>
         <button onClick={p.onSoundMuteToggle} aria-pressed={sound.muted} data-testid="sound-mute-btn">Mute</button>
         <label className="sound-volume-label"><span>Volume</span><input aria-label="Sound volume" data-testid="sound-volume-slider" type="range" min="0" max="1" step="0.01" value={sound.volume} onChange={e=>p.onSoundVolume(+e.target.value)}/><output>{Math.round(sound.volume*100)}%</output></label>

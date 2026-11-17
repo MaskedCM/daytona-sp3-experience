@@ -303,8 +303,8 @@ test('SOUND_CREDITS and FREE_SOUND_PACK integrity: credits match and WAV/MP3 dat
   assert.equal(SOUND_CREDITS.length, 2);
   assert.deepEqual(ILLUSTRATIVE_SOUND_CREDITS, SOUND_CREDITS, 'Credits shown before opt-in must exactly match loaded pack metadata');
   assert.ok(
-    ILLUSTRATIVE_SOUND_CREDITS[0].changes.includes('114.92–115.651 s'),
-    'ILLUSTRATIVE_SOUND_CREDITS must document the stable 114.92–115.651 s rev passage',
+    ILLUSTRATIVE_SOUND_CREDITS[0].changes.includes('12.20–19.37 s'),
+    'Credits must document the original stationary rev passage',
   );
 
   for (const key of ['start', 'panelOpen', 'panelClose'] as const) {
@@ -327,6 +327,41 @@ test('SOUND_CREDITS and FREE_SOUND_PACK integrity: credits match and WAV/MP3 dat
     const ab = dataUriToArrayBuffer(uri);
     assert.ok(ab.byteLength > 1000, `${key} decoded buffer should be non-trivial`);
   }
+});
+
+test('Rev asset preserves a full recorded passage and natural dynamics instead of a frozen sub-second sustain', () => {
+  const wav = Buffer.from(dataUriToArrayBuffer(FREE_SOUND_PACK.rev));
+  assert.equal(wav.subarray(0, 4).toString('ascii'), 'RIFF');
+  assert.equal(wav.subarray(8, 12).toString('ascii'), 'WAVE');
+  let byteRate = 0;
+  let samples: Buffer | null = null;
+  for (let offset = 12; offset + 8 <= wav.length;) {
+    const id = wav.subarray(offset, offset + 4).toString('ascii');
+    const size = wav.readUInt32LE(offset + 4);
+    if (id === 'fmt ') {
+      assert.equal(wav.readUInt16LE(offset + 8), 1, 'Lossless PCM');
+      assert.equal(wav.readUInt16LE(offset + 10), 2, 'Original stereo');
+      assert.equal(wav.readUInt32LE(offset + 12), 48000);
+      assert.equal(wav.readUInt16LE(offset + 22), 16);
+      byteRate = wav.readUInt32LE(offset + 16);
+    }
+    if (id === 'data') samples = wav.subarray(offset + 8, offset + 8 + size);
+    offset += 8 + size + (size % 2);
+  }
+  assert.ok(samples && byteRate, 'Valid PCM data and format chunks');
+  assert.ok(samples.length / byteRate >= 6, 'Keep complete recorded revs; do not freeze a sub-second high note');
+  const levels: number[] = [];
+  const windowBytes = Math.round(byteRate * 0.2);
+  for (let offset = windowBytes; offset + windowBytes < samples.length; offset += windowBytes) {
+    let energy = 0;
+    for (let i = offset; i < offset + windowBytes; i += 2) {
+      const value = samples.readInt16LE(i) / 32768;
+      energy += value * value;
+    }
+    levels.push(Math.sqrt(energy / (windowBytes / 2)));
+  }
+  assert.ok(Math.min(...levels) > 0, 'The passage must not contain silent holes');
+  assert.ok(Math.max(...levels) / Math.min(...levels) > 2, 'Preserve the original rev dynamics instead of rapid automatic levelling');
 });
 
 test('enable() synchronously creates and resumes AudioContext in user gesture, then decodes all 5 clips', async () => {
@@ -433,7 +468,7 @@ test('stopEngine() during startup cancels pending crossfade so idle never starts
   engine.dispose();
 });
 
-test('revEngine() holds steady native loop beyond 60s until Stop; Start/Rev switches crossfade smoothly without starter re-crank or stacked voices', async () => {
+test('revEngine() repeats recorded revs beyond 60s until Stop; Start/Rev switches crossfade smoothly without starter re-crank or stacked voices', async () => {
   const { engine, advanceTime, getStats } = createTestHarness();
   await engine.enable();
 

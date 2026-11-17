@@ -166,11 +166,12 @@ export const ReferenceModal: React.FC<ReferenceModalProps> = ({ open, onClose })
             >
               <strong>Illustrative sound layer (not authentic Daytona SP3 audio):</strong>{' '}
               Engine start (9.25–11.30 s), continuous running idle loop (11.05–12.15 s) and
-              steady high-RPM rev loop (114.92–115.651 s, normalised to -18 LUFS) are edited
+              original stationary revs (12.20–19.37 s) are edited
               excerpts from DARK WORKS’ user-selected Daytona SP3 gameplay video in Assetto
               Corsa EVO. This is game audio; a reuse licence has not been verified. Panel
               opening/closing foley uses generic passenger-car door recordings. All clips are
-              opt-in and embedded locally.
+              opt-in and embedded locally. Rev repeats the recorded rise and fall at the
+              original speed until Stop.
             </p>
             <ul className="space-y-2.5 text-xs text-zinc-300" data-testid="sound-credits-list">
               {ILLUSTRATIVE_SOUND_CREDITS.map((item) => (
